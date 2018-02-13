@@ -10,6 +10,11 @@
     apt:
         upgrade: dist
 
+  - name: Install ntpdate client
+    apt:
+        name: ntpdate
+        state: present
+
   - name: Upload ntpdate client file
     copy:
          src: /etc/ansible/files/ntpdate
@@ -22,11 +27,6 @@
   - name: Execute ntpdate
     command: ntpdate-debian
 
-  - name: Install glusterfs on all nodes
-    apt:
-       name: glusterfs-server
-       state: present
-
   - name: copy .bashrc file to node(s)
     copy:
          src: ~/.bashrc
@@ -35,3 +35,8 @@
          group: root
          mode: 0644
          backup: yes
+
+  - name: Install glusterfs on node(s)
+    apt:
+        name: glusterfs-server
+        state: present
