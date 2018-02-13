@@ -15,7 +15,7 @@
         name: ntpdate
         state: present
 
-  - name: Upload ntpdate client file
+  - name: Upload customized ntpdate client file
     copy:
          src: /etc/ansible/files/ntpdate
          dest: /etc/default/ntpdate
@@ -27,7 +27,7 @@
   - name: Execute ntpdate
     command: ntpdate-debian
 
-  - name: copy .bashrc file to node(s)
+  - name: Upload customized .bashrc file to node(s)
     copy:
          src: ~/.bashrc
          dest: ~/.bashrc
