@@ -1,0 +1,11 @@
+---
+
+loopbacks:
+  - { interface: loopback0, addr: 172.16.255.253, mask: 32 }
+  - { interface: loopback1, addr: 10.254.254.253, mask: 32 }
+
+svi_interface_addr:
+  - { interface: vlan2, addr: 10.2.2.3, mask: 24 }
+  - { interface: vlan3, addr: 10.3.3.3, mask: 24 }
+  - { interface: vlan4, addr: 10.4.4.3, mask: 24 }
+  - { interface: vlan5, addr: 10.5.5.3, mask: 24 }
