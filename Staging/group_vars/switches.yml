@@ -1,0 +1,21 @@
+---
+
+# Define group variables
+
+features:
+  - { feature: ospf }
+  - { feature: interface-vlan }
+  - { feature: vpc }
+vlans:
+  - { vlan_id: 2, name: Storage }
+  - { vlan_id: 3, name: Commerce }
+  - { vlan_id: 4, name: Corporate }
+  - { vlan_id: 5, name: TE }
+svi_interfaces:
+  - { interface: vlan2, description: Storage }
+  - { interface: vlan3, description: Commerce }
+  - { interface: vlan4, description: Corporate }
+  - { interface: vlan5, description: TE }
+loopback_interfaces:
+  - { interface: loopback0, description: 'iBGP source' }
+  - { interface: loopback1, description: 'vrf mgmt source' }
