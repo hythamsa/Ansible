@@ -12,7 +12,6 @@
       transport: nxapi
       host: "{{ inventory_hostname }}"
 
-
   tasks:
 
     - name: Enable required feature sets
