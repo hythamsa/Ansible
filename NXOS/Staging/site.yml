@@ -42,7 +42,6 @@
         provider: "{{ nxos }}"
       with_items: "{{ loopback_interfaces }}"
 
-
     - name: Create L3 configs for SVI
       nxos_ip_interface:
         interface: "{{ item.interface }}"
@@ -59,6 +58,46 @@
         mask: "{{ item.mask }}"
         provider: "{{ nxos }}"
       with_items: "{{ loopbacks }}"
+
+    - name: Configure VPC parameters
+      nxos_vpc:
+        auto_recovery: true
+        domain: 100
+        peer_gw: true
+        pkl_vrf: management
+        pkl_dest: "{{ item.pkl_dest }}"
+        pkl_src: "{{ item.pkl_src }}"
+        state: present
+        provider: "{{ nxos }}"
+      with_items: "{{ vpc_config }}"
+
+    - name: Assign interfaces as members to port-channel
+      nxos_portchannel:
+        group: 10
+        members: ['Ethernet1/8', 'Ethernet1/9']
+        mode: active
+        state: present
+        provider: "{{ nxos }}"
+
+    - name: Configure port-channel as a trunk
+      nxos_switchport:
+        interface: port-channel10
+        mode: trunk
+        provider: "{{ nxos }}"
+
+    - name: Assign interface as a VPC peer-link
+      nxos_vpc_interface:
+        portchannel: 10
+        peer_link: true
+        state: present
+        provider: "{{ nxos }}"
+
+    - name: Ensure member port-channel interfaces are up
+      nxos_interface:
+        interface: "{{ item.interface }}"
+        state: present
+        provider: "{{ nxos }}"
+      with_items: "{{ physical_intf }}"
 
     - name: Save running config if modified
       nxos_config:
