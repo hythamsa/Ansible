@@ -8,8 +8,8 @@ Pretty basic YAML file that I leverage for staging my glusterfs network file sys
 Configures feature sets, creates VLAN IDs and names, SVI interfaces, and loopback interfaces with IP addresses on a single site on a pair of 9K switches.
 
 Currently working on:
-Adding VPC fucntionality
-Adding OSPF
-Adding BGP (both i and e) with redistribution into OSPF
+- Adding VPC fucntionality
+- Adding OSPF
+- Adding BGP (both i and e) with redistribution into OSPF
 
 Future revisions will include MPLS environment to simulate global WAN.
