@@ -6,6 +6,7 @@ features:
   - { feature: ospf }
   - { feature: interface-vlan }
   - { feature: vpc }
+  - { feature: lacp }
 vlans:
   - { vlan_id: 2, name: Storage }
   - { vlan_id: 3, name: Commerce }
@@ -19,3 +20,6 @@ svi_interfaces:
 loopback_interfaces:
   - { interface: loopback0, description: 'iBGP source' }
   - { interface: loopback1, description: 'vrf mgmt source' }
+physical_intf:
+  - { interface: Ethernet1/8 }
+  - { interface: Ethernet1/9 }
