@@ -2,7 +2,7 @@
 
 # Define group variables
 
-features:
+enable_features:
   - { feature: vpc }
   - { feature: lacp }
 phys_intf:
