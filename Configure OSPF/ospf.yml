@@ -1,0 +1,41 @@
+---
+
+- name: Configure VPC IDs for port-channeling
+  hosts: switches
+  gather_facts: no
+  connection: local
+
+  vars:
+    nxos:
+      username: admin
+      password: admin
+      transport: nxapi
+      host: "{{ inventory_hostname }}"
+
+  tasks:
+    - name: Enabling OSPF
+      nxos_feature:
+        feature: ospf
+        provider: "{{ nxos }}"
+
+    - name: Configuring OSPF domain
+      nxos_ospf:
+        ospf: 1
+        state: present
+        provider: "{{ nxos }}"
+
+    - name: Configuring OSPF Interface Parameters
+      nxos_interface_ospf:
+        interface: "{{ item.interface }}"
+        ospf: 1
+        area: 0
+        dead_interval: 4
+        hello_interval: 1
+        provider: "{{ nxos }}"
+      with_items: "{{ ospf_interfaces }}"
+
+    - name: Save running config if modified
+      nxos_config:
+        save_when: modified
+        timeout: 30
+        provider: "{{ nxos }}"
