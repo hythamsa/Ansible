@@ -3,7 +3,6 @@
 # Define group variables
 
 features:
-  - { feature: ospf }
   - { feature: interface-vlan }
   - { feature: vpc }
   - { feature: lacp }
