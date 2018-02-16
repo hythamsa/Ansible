@@ -24,3 +24,5 @@ Please note:
 - group_vars has two variables, but please focus your attention on "phys_intf". You must adjust the ethernet interfaces in use (in my NXOSV 9K example I'm using 1G interfaces rather than the standard 10G), please be sure to modify the interfaces to correctly reflect your physical environment. If you do not, VPC peer-link establishment will surely fail.
 
 - In vpc.yml there are additional parameters that have not been defined by a variable. These include: port-channel ID, and VPC domain ID. If these do not meet your internal standards, please be sure to change these values to reflect your environment.
+
+- In vpc.yml the member ports for the port-channel are statically defined and if you are not using the same ports in your environment (lab, prod, virtual, physical...etc) you will need to modify these member ports accordingly.
