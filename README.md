@@ -15,7 +15,7 @@ Currently working on:
 The plan is to break down each configuration into its own unique set of Ansible configuration files making it easier for individuals to acquire and tailor for their own needs.
 
 
-# Configure VPC
+# Configure VPC (Ansible 2.4)
 Configure VPC Peer-Link... (I should change the name of the folder structure to be more clear... damn it!) ... between two N9K switches.
 
 Please note:
