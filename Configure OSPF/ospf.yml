@@ -1,6 +1,6 @@
 ---
 
-- name: Configure VPC IDs for port-channeling
+- name: Configure VPC Peer-Link
   hosts: switches
   gather_facts: no
   connection: local
