@@ -15,8 +15,8 @@ Currently working on:
 The plan is to break down each configuration into its own unique set of Ansible configuration files making it easier for individuals to acquire and tailor for their own needs.
 
 
-# Configure VPC (Ansible 2.4)
-Configure VPC Peer-Link... (I should change the name of the folder structure to be more clear... damn it!) ... between two N9K switches.
+# Configure VPC Peer-Link (Ansible 2.4)
+Configure VPC Peer-Link between two N9K switches.
 
 Please note:
 - host_vars contains two files (for my particular case) defining the necessary input for the peer-keepalive configuration for each 9K switch host. You MUST modify both of these files (more accurately the "vpc_config" variable) to reflect the IP addressing in use within your environment prior to proceeding or peer-link establishment will fail (this assumes you're not magically using the exact same IP allocation as I am).
