@@ -1,0 +1,9 @@
+---
+
+# Define group variables
+
+ospf_interfaces:
+- { interface: vlan2 }
+- { interface: vlan3 }
+- { interface: vlan4 }
+- { interface: vlan5 }
