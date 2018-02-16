@@ -12,4 +12,15 @@ Currently working on:
 - Adding iBGP between 9Ks over separate physical link sourcing from lo0. eBGP to be configured outside of my lab to provide default route inbound simulating an ISP to customer environment.
 - ASAv to provide (in/out)bound security
 
-The plan is to break down each configuration into its own unique set of Ansible configuration files making it easier for individuals to acuiqre and tailor for their own needs.
+The plan is to break down each configuration into its own unique set of Ansible configuration files making it easier for individuals to acquire and tailor for their own needs.
+
+
+# Configure VPC
+Configure VPC Peer-Link... (I should change the name of the folder structure to be more clear... damn it!) ... between two N9K switches.
+
+Please note:
+- host_vars contains two files (for my particular case) defining the necessary input for the peer-keepalive configuration for each 9K switch host. You MUST modify both of these files (more accurately the "vpc_config" variable) to reflect the IP addressing in use within your environment prior to proceeding or peer-link establishment will fail (this assumes you're not magically using the exact same IP allocation as I am).
+
+- group_vars has two variables, but please focus your attention on "phys_intf". You must adjust the ethernet interfaces in use (in my NXOSV 9K example I'm using 1G interfaces rather than the standard 10G), please be sure to modify the interfaces to correctly reflect your physical environment. If you do not, VPC peer-link establishment will surely fail.
+
+- In vpc.yml there are additional parameters that have not been defined by a variable. These include: port-channel ID, and VPC domain ID. If these do not meet your internal standards, please be sure to change these values to reflect your environment.
