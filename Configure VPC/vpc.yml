@@ -35,7 +35,7 @@
     - name: Assign interfaces as members to port-channel
       nxos_portchannel:
         group: 10
-        members: ['Ethernet1/8', 'Ethernet1/9']
+        members: ['Ethernet1/1', 'Ethernet1/2']
         mode: active
         state: present
         provider: "{{ nxos }}"
