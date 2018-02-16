@@ -1,6 +1,6 @@
 ---
 
-- name: Configure VPC Peer-Link
+- name: Configure OSPF
   hosts: switches
   gather_facts: no
   connection: local
