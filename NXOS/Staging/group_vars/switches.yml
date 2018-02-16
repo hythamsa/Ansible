@@ -22,3 +22,8 @@ loopback_interfaces:
 physical_intf:
   - { interface: Ethernet1/8 }
   - { interface: Ethernet1/9 }
+ospf_interfaces:
+- { interface: vlan2 }
+- { interface: vlan3 }
+- { interface: vlan4 }
+- { interface: vlan5 }
