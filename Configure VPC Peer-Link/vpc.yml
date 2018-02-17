@@ -32,7 +32,7 @@
         provider: "{{ nxos }}"
       with_items: "{{ vpc_config }}"
 
-    - name: Assign interfaces as members to port-channel
+    - name: Assign Interfaces to Port-Channel
       nxos_portchannel:
         group: 10
         members: ['Ethernet1/1', 'Ethernet1/2']
@@ -46,21 +46,21 @@
         mode: trunk
         provider: "{{ nxos }}"
 
-    - name: Assign interface to VPC
+    - name: Assign interface as a VPC Peer-Link
       nxos_vpc_interface:
         portchannel: 10
         peer_link: true
         state: present
         provider: "{{ nxos }}"
 
-    - name: Ensure interfaces are active
+    - name: Ensure Port-Channel Member Interface are UP
       nxos_interface:
         interface: "{{ item.interface }}"
         state: present
         provider: "{{ nxos }}"
       with_items: "{{ phys_intf }}"
 
-    - name: Save running config if modified
+    - name: Save Running Config if Modified
       nxos_config:
         save_when: modified
         timeout: 30
