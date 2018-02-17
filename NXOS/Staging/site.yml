@@ -98,7 +98,7 @@
         provider: "{{ nxos }}"
       with_items: "{{ physical_intf }}"
       
-          - name: Enabling OSPF
+    - name: Enabling OSPF
       nxos_feature:
         feature: ospf
         provider: "{{ nxos }}"
