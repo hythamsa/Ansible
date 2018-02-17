@@ -1,5 +1,5 @@
 # Ansible
-You'll find my collection of some very basic Ansible YAML based linux node staging files to the more advanced examples configuring a multi-switched environment.
+My collection of Ansible automation scripts for both Linux and NXOS environments. Some are incredibly rudimentary, while others are slightly more complex. Thanks for swinging on by.
 
 # gluster-staging.yml (Ansible 2.4)
 Pretty basic YAML file that I leverage for staging my glusterfs network file system running on the phenomenal Pi 3 Model B leveraging Raspbian. I'll be adding more intelligence to it as time permits such as: reboot after dist-upgrade if firmware on Pi 3 dictates...etc.
