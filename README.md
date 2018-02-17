@@ -2,12 +2,12 @@
 My collection of Ansible automation scripts for both Linux and NXOS environments. Some are incredibly rudimentary, while others are slightly more complex. Thanks for swinging on by.
 
 # gluster-staging.yml (Ansible 2.4)
-Pretty basic YAML file that I leverage for staging my glusterfs network file system running on the phenomenal Pi 3 Model B leveraging Raspbian. I'll be adding more intelligence to it as time permits such as: reboot after dist-upgrade if firmware on Pi 3 dictates...etc.
+Pretty basic YAML file that I leverage for staging my glusterfs network file system running on the phenomenal Pi 3 Model B with Raspbian OS. I'll be adding more intelligence to the staging over time
 
 # NXOS Staging (Ansible 2.4)
 Configure feature sets, creates VLAN IDs and names, SVI interfaces and loopback interfaces with IP addresses, along with VPC configuration on a single site on a pair of 9K switches for my home lab within GNS3. This allows me to quickly reset the entire lab environment (sript will be completed shortly) and quickly turn it back up again allowing me to take on the next challenge.
 
-Ansible server is running on a Raspberry Pi 3 Model B with Raspbian OS outside of the environment with access into my GNS3 environment via a bridged network adapter (see Network Diagram in directory). I'm well aware I could have used the network automation host within GNS3 as it comes pre-packaged with Ansible, but... I also have a GlusterFS system with an oVirt lab ready to go on several other Raspberry PIs and I figured why not just use a spare for an Ansible and Bind server.
+Ansible server is running on a Raspberry Pi 3 Model B with Raspbian OS outside of the environment with access into my GNS3 environment via a bridged network adapter (see Network Diagram in directory). I'm well aware I could have used the network automation host within GNS3 as it comes pre-packaged with Ansible, but I also have a GlusterFS system with an oVirt lab ready to go on several other Raspberry PIs and I figured why not just use a spare for an Ansible and Bind server.
 
 Please note:
 
