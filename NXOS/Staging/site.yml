@@ -14,13 +14,13 @@
 
   tasks:
 
-    - name: Enable required feature sets
+    - name: Enable Features
       nxos_feature:
         feature: "{{ item.feature }}"
         provider: "{{ nxos }}"
       with_items: "{{ features }}"
 
-    - name: Create necessary vlan IDs and Names
+    - name: Create VLAN IDs and Associated Names
       nxos_vlan:
         vlan_id: "{{ item.vlan_id }}"
         name: "{{ item.name }}"
@@ -34,14 +34,14 @@
         provider: "{{ nxos }}"
       with_items: "{{ svi_interfaces }}"
 
-    - name: Create loopback interfaces
+    - name: Create Loopback Interfaces
       nxos_interface:
         interface: "{{ item.interface }}"
         description: "{{ item.description }}"
         provider: "{{ nxos }}"
       with_items: "{{ loopback_interfaces }}"
 
-    - name: Create L3 configs for SVI
+    - name: Assign IP Addressing to SVIs
       nxos_ip_interface:
         interface: "{{ item.interface }}"
         addr: "{{ item.addr }}"
@@ -50,7 +50,7 @@
       with_items: "{{ svi_interface_addr }}"
 
 
-    - name: Add IP addresses to loopbacks
+    - name: Configure Loopback IP Addressing
       nxos_ip_interface:
         interface: "{{ item.interface }}"
         addr: "{{ item.addr }}"
@@ -58,7 +58,7 @@
         provider: "{{ nxos }}"
       with_items: "{{ loopbacks }}"
 
-    - name: Configure VPC parameters
+    - name: Configure VPC Parameters
       nxos_vpc:
         auto_recovery: true
         domain: 100
@@ -70,7 +70,7 @@
         provider: "{{ nxos }}"
       with_items: "{{ vpc_config }}"
 
-    - name: Assign interfaces as members to port-channel
+    - name: Assign Interfaces as Member Ports
       nxos_portchannel:
         group: 10
         members: ['Ethernet1/8', 'Ethernet1/9']
@@ -78,30 +78,25 @@
         state: present
         provider: "{{ nxos }}"
 
-    - name: Configure port-channel as a trunk
+    - name: Configure Port-Channel as a Trunk
       nxos_switchport:
         interface: port-channel10
         mode: trunk
         provider: "{{ nxos }}"
 
-    - name: Assign interface as a VPC peer-link
+    - name: Assign Interface as a VPC Peer-Link
       nxos_vpc_interface:
         portchannel: 10
         peer_link: true
         state: present
         provider: "{{ nxos }}"
 
-    - name: Ensure member port-channel interfaces are up
+    - name: Ensure Member Port-Channel Interfaces are UP
       nxos_interface:
         interface: "{{ item.interface }}"
         state: present
         provider: "{{ nxos }}"
       with_items: "{{ physical_intf }}"
-      
-    - name: Enabling OSPF
-      nxos_feature:
-        feature: ospf
-        provider: "{{ nxos }}"
 
     - name: Configuring OSPF domain
       nxos_ospf:
