@@ -1,0 +1,38 @@
+---
+
+- name: Backup NX Configs
+  hosts: nexus
+  gather_facts: no
+  connection: local
+
+  vars:
+    nxos:
+      username: admin
+      password: admin
+      transport: nxapi
+      host: "{{ inventory_hostname }}"
+
+
+  tasks:
+    - name: Downloading NX Switch Configurations
+      nxos_config:
+        backup: yes
+        provider: "{{ nxos }}"
+
+
+- name: Backup IOS Configs
+  hosts: ios
+  gather_facts: no
+  connection: local
+
+  vars:
+    ios:
+      username: admin
+      password: admin
+      host: "{{ inventory_hostname }}"
+
+  tasks:
+    - name: Download IOS Switch Configurations
+      ios_config:
+        backup: yes
+        provider: "{{ ios }}"
