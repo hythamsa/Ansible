@@ -28,3 +28,10 @@ Please note:
 
 # Configure OSPF (Ansible 2.4)
 Configure OSPF domain, assign OSPF parameters to interfaces defined rounding it up with a config write. As usual please make the necessary modifications to the username, password and host definitions. In group_vars/switches.yml you'll find the variable "ospf_interfaces" which will require modification to match the interfaces in your environment. 
+
+# Backup NXOS and IOS Configs
+Leverage Ansible nxos_config and ios_config network modules to perform a backup of your network inventory. Place "configs-backup.sh" into your /etc/cron.daily directory and voila... daily automated backups placed into a directory aptly named after today's date.
+
+Of course before you go ahead and execute "configs-backup.sh" there are some base considerations... variables!
+
+- variable basedir is configured for the stock /etc/ansible/backup directory. FYI: "backup" directory is created by the nxos_config and ios_config network modules automagically if it does not already exist. The script will execute /usr/bin/ansible-playbook against /etc/ansible/backup.yml... so... captain obvious statement ahead... if this is does not fit your directory structure, then you will need to modify it.
