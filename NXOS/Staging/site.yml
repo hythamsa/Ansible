@@ -69,6 +69,12 @@
         state: present
         provider: "{{ nxos }}"
       with_items: "{{ vpc_config }}"
+      
+    - name: Create Port-Channel Interface
+      nxos_interface:
+        interface: port-channel10
+        state: present
+        provider "{{ nxos }}"
 
     - name: Assign Interfaces as Member Ports
       nxos_portchannel:
