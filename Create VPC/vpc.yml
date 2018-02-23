@@ -1,0 +1,58 @@
+---
+
+- name: Configure VPC
+  hosts: nexus
+  gather_facts: no
+  connection: local
+
+  vars:
+    nxos:
+      username: admin
+      password: admin
+      transport: nxapi
+      host: "{{ inventory_hostname }}"
+
+  tasks:
+    - name: Create Port-Channel Interfaces
+      nxos_interface:
+        interface: "{{ item.interface }}"
+        state: present
+        provider: "{{ nxos }}"
+      with_items: "{{ port_trunk }}"
+
+    - name: Assign Interfaces to Port-Channel
+      nxos_portchannel:
+        group: "{{ item.group }}"
+        members: "{{ item.members }}"
+        mode: active
+        state: present
+        provider: "{{ nxos }}"
+      with_items: "{{ phys_intf }}"
+
+    - name: Configure Port-Channel as a Trunk
+      nxos_switchport:
+        interface: "{{ item.interface }}"
+        mode: trunk
+        provider: "{{ nxos }}"
+      with_items: "{{ port_trunk }}"
+
+    - name: Configure VPC ID for each Port-Channel
+      nxos_vpc_interface:
+        portchannel: "{{ item.portchannel }}"
+        vpc: "{{ item.vpc }}"
+        state: present
+        provider: "{{ nxos }}"
+      with_items: "{{ port_vpc }}"
+
+    - name: Ensure Port-Channel Member Interfaces are UP
+      nxos_interface:
+        interface: "{{ item.interface }}"
+        state: present
+        provider: "{{ nxos }}"
+      with_items: "{{ port_up }}"
+
+    - name: Save Running Config if Modified
+      nxos_config:
+        save_when: modified
+        timeout: 30
+        provider: "{{ nxos }}"
