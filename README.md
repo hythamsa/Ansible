@@ -14,7 +14,7 @@ Please note:
 - variables must be defined to match and meet your needs!
 - username and password are currently set to admin:admin for the purpose of demonstration. Far more secure methods can be leveraged within Ansible (Please see: http://docs.ansible.com/ansible/2.4/vault.html. More specifically: ansible-vault encrypt_string command). I intend on using this in the future to secure scripts.
 
-# Configure VPC Peer-Link (Ansible 2.4)
+# Configure VPC Peer-Link (NXOS, Ansible 2.4)
 Configure VPC Peer-Link between two N9K switches.
 
 Please note:
@@ -26,7 +26,7 @@ Please note:
 
 - In vpc.yml the member ports for the port-channel are statically defined and if you are not using the same ports in your environment (lab, prod, virtual, physical...etc) you will need to modify these member ports accordingly.
 
-# Configure OSPF (Ansible 2.4)
+# Configure OSPF (NXOS, Ansible 2.4)
 Configure OSPF domain, assign OSPF parameters to interfaces defined rounding it up with a config write. As usual please make the necessary modifications to the username, password and host definitions. In group_vars/switches.yml you'll find the variable "ospf_interfaces" which will require modification to match the interfaces in your environment. 
 
 # Backup NXOS and IOS Configs
@@ -35,3 +35,11 @@ Leverage Ansible nxos_config and ios_config network modules to perform a backup 
 Of course before you go ahead and execute "configs-backup.sh" there are some base considerations... variables!
 
 - variable basedir is configured for the stock /etc/ansible/backup directory. FYI: "backup" directory is created by the nxos_config and ios_config network modules automagically if it does not already exist. The script will execute /usr/bin/ansible-playbook against /etc/ansible/backup.yml... so... captain obvious statement ahead... if this is does not fit your directory structure, then you will need to modify it.
+
+# Create VPC (NXOS, Ansible 2.4)
+As the name heavily suggests... create a VPC. In this particular example configuration, I deployed only two port-channels each with a unique VPC ID
+
+ - Port-Channel 20 = VPC 20
+ - Port-Channel 30 = VPC 30
+ 
+ Please make the necessary changes to the vpc.yml and group_vars/nexus.yml files to match your environment
