@@ -1,7 +1,7 @@
 ---
 
 - name: Configure OSPF
-  hosts: switches
+  hosts: nexus
   gather_facts: no
   connection: local
 
