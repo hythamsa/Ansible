@@ -1,7 +1,7 @@
 ---
 
 - name: Stage 9K Switching Environment
-  hosts: switches
+  hosts: nexus
   gather_facts: no
   connection: local
 
