@@ -1,0 +1,13 @@
+---
+
+auth_user:
+- { become_user: pi }
+- { become_user: root }
+
+sudo_user:
+- { become_user: pi }
+- { become_user: root }
+
+file_own:
+- { dest: /home/pi/.ssh/, owner: pi, group: pi }
+- { dest: /root/.ssh/, owner: root, group: root}
