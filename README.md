@@ -50,6 +50,11 @@ To provide ssh access into your Pi 3s after flashing your SD card, create a blan
 This will allow ssh access into your systems using default creds:
 - username: pi
 - password: raspberry
+
+When kicking off the playbook for the first time you will be required to supply a password via the "--ask-pass" argument.
+- EG: ansible-playbook staging.yml --ask-pass
+
+You will be prompted for the password before the script continues its execution.
  
 Please note:
 - PLEASE READ: I disable BOTH WIFI AND BLUETOOTH as I have absolutely no requirement for either one of them. If you require their use, please refer to lines 31 - 38 in staging.yml and comment out as necessary to retain functionality 
@@ -57,4 +62,4 @@ Please note:
 - All "copy" are sourced directly from /etc/ansible/files folder on my local Ansible host. Modify as necessary
 - I currently do not have Bind configured (for now) and leverage static entries in /etc/hosts for reachability
 - /etc/default/ntpdate references one of my hosts on my network. Modify "NTPSERVERS= " to your host
-- I round up the script with a "shutdown -r +1" meaning reboot after 1 minute to kick changes in (disable bluetooth and wifi)
+- I round up the script with a "shutdown -r +1" meaning reboot after 1 minute to kick changes in (disable bluetooth and wifi among others)
