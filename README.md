@@ -26,7 +26,7 @@ Please note:
 # Configure OSPF (NXOS, Ansible 2.4)
 Configure OSPF domain, assign OSPF parameters to interfaces defined rounding it up with a config write. As usual please make the necessary modifications to the username, password and host definitions. In group_vars/switches.yml you'll find the variable "ospf_interfaces" which will require modification to match the interfaces in your environment. 
 
-# Backup NXOS and IOS Configs
+# Backup NXOS and IOS Configs (Ansible 2.4)
 Leverage Ansible nxos_config and ios_config network modules to perform a backup of your network inventory. Place "configs-backup.sh" into your /etc/cron.daily directory and voila... daily automated backups placed into a directory aptly named after today's date.
 
 Of course before you go ahead and execute "configs-backup.sh" there are some base considerations... variables!
@@ -41,7 +41,7 @@ As the name heavily suggests... create a VPC. In this particular example configu
  
  Please make the necessary changes to the vpc.yml and group_vars/nexus.yml files to match your environment
  
-# Raspberry Pi 3 Staging
+# Raspberry Pi 3 Staging (Ansible 2.4)
 Written to stage my Raspberry Pi 3 Model Bs before application staging is to take place (in the process of writing Kubernetes and GlusterFS Ansbile goodness...).
 
 To provide ssh access into your Pi 3s after flashing your SD card, create a blank ssh file within /boot.
