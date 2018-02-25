@@ -1,9 +1,6 @@
 # Ansible
 My collection of Ansible automation scripts for both Linux and NXOS environments. Some are incredibly rudimentary, while others are slightly more complex. Thanks for swinging on by.
 
-# gluster-staging.yml (Ansible 2.4)
-Pretty basic YAML file that I leverage for staging my glusterfs network file system running on the phenomenal Pi 3 Model B with Raspbian OS. I'll be adding more intelligence to the staging over time
-
 # NXOS Staging (Ansible 2.4)
 Configure feature sets, creates VLAN IDs and names, SVI interfaces and loopback interfaces with IP addresses, along with VPC configuration on a single site on a pair of 9K switches for my home lab within GNS3. This allows me to quickly reset the entire lab environment (sript will be completed shortly) and quickly turn it back up again allowing me to take on the next challenge.
 
@@ -43,3 +40,21 @@ As the name heavily suggests... create a VPC. In this particular example configu
  - Port-Channel 30 = VPC 30
  
  Please make the necessary changes to the vpc.yml and group_vars/nexus.yml files to match your environment
+ 
+# Raspberry Pi 3 Staging
+Written to stage my Raspberry Pi 3 Model Bs before application staging is to take place (in the process of writing Kubernetes and GlusterFS Ansbile goodness...).
+
+To provide ssh access into your Pi 3s after flashing your SD card, create a blank ssh file within /boot.
+- touch /boot/ssh
+
+This will allow ssh access into your systems using default creds:
+- username: pi
+- password: raspberry
+ 
+Please note:
+- PLEASE READ: I disable BOTH WIFI AND BLUETOOTH as I have absolutely no requirement for either one of them. If you require their use, please refer to lines 31 - 38 and comment out as necessary to retain functionality 
+- All files found in host_vars will need to be modified to reflect the hostnames you select for you environment
+- All "copy" are sourced directly from /etc/ansible/files folder on my local Ansible host. Modify as necessary
+- I currently do not have Bind configured (for now) and leverage static entries in /etc/hosts for reachability
+- /etc/default/ntpdate references one of my hosts on my network. Modify "NTPSERVERS= " to your host
+- I round up the script with a "shutdown -r +1" meaning reboot after 1 minute to kick changes in (disable bluetooth and wifi)
