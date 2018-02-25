@@ -1,0 +1,106 @@
+---
+
+- name: Stage New Hosts Prior to App Install
+  hosts: kubenodes
+  gather_facts: no
+  remote_user: pi
+  become_method: sudo
+  become: true
+
+  tasks:
+    - name: Update APT Cache Repository
+      apt:
+        update_cache: yes
+
+    - name: Upgrade All Packages
+      apt:
+        upgrade: dist
+
+
+    - name: Copy /etc/hosts File to each Host
+      copy:
+        src: /etc/ansible/files/hosts
+        dest: /etc/hosts
+        force: yes
+        owner: root
+        group: root
+        mode: 0644
+        backup: yes
+
+
+    # THIS WILL DISABLE BLUETOOTH AND WIFI ON YOUR Raspberry Pi 3!!
+    - name: Disable Bluetooth and Wifi
+      shell: echo -e '\n'# Disable Wifi and Bluetooth'\n'dtoverlay=pi3-disable-wifi'\n'dtoverlay=pi3-disable-bt >> /boot/config.txt
+      args:
+        executable: /bin/bash
+      become: true
+      become_method: sudo
+      become_user: root
+
+
+    - name: Change Hostname
+      hostname:
+        name: "{{ item.name }}"
+      with_items: "{{ host_name }}"
+
+
+    # NTP Configuration
+    - name: Install ntpdate
+      apt:
+        name: ntpdate
+        state: present
+
+    - name: Upload ntpdate Client File
+      copy:
+        src: /etc/ansible/files/ntpdate
+        dest: /etc/default/ntpdate
+        owner: root
+        group: root
+        mode: 0644
+        backup: yes
+
+    - name: Execute ntpdate
+      command: ntpdate-debian
+
+
+    # SSH Configuration
+    - name: Create Priv/Pub key-pair for SSH
+      command: echo -e 'y\n' | ssh-keygen -q -t rsa -b 4096 -f ~/.ssh/id_rsa -N "" 1>/dev/null
+      become: true
+      become_user: "{{ item.become_user }}"
+      become_method: sudo
+      with_items: "{{ sudo_user }}"
+
+    - name: Copy authorized_keys to each Host
+      copy:
+        src: /etc/ansible/files/authorized_keys
+        dest: "{{ item.dest }}"
+        force: yes
+        owner: "{{ item.owner }}"
+        group: "{{ item.group }}"
+        mode: 0600
+        backup: yes
+      with_items: "{{ file_own }}"
+
+    - name: Copy Secured sshd_config File
+      copy:
+        src: /etc/ansible/files/sshd_config
+        dest: /etc/ssh/
+        owner: root
+        group: root
+        mode: 0644
+        force: yes
+        backup: yes
+
+    - name: Ensure SSHD is Started and Enabled at Boot Time
+      service:
+        name: ssh
+        state: started
+        enabled: yes
+
+    # Restart the Server
+    - name: REboot the server
+      command: shutdown -r +1
+      async: 0
+      gnorepoll: 0
+      ignore_errors: yes
