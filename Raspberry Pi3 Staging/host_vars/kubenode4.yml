@@ -1,0 +1,4 @@
+---
+
+host_name:
+- { name: kubenode4 }
