@@ -102,5 +102,5 @@
     - name: Reboot the server
       command: shutdown -r +1
       async: 0
-      gnorepoll: 0
+      poll: 0
       ignore_errors: yes
