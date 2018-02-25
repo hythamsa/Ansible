@@ -51,10 +51,18 @@ This will allow ssh access into your systems using default creds:
 - username: pi
 - password: raspberry
 
+You may receive the following error message if you have not yet ssh'd into each client have their host key installed in ~/.ssh/known_hosts.
+
+fatal: [kubenode1]: FAILED! => {"msg": "Using a SSH password instead of a key is not possible because Host Key checking is enabled and sshpass does not support this.  Please add this host's fingerprint to your known_hosts file to manage this host."}
+
+To mitigate this prior to execution, edit /etc/ansible/ansible.cfg (if executing from default location, if not add "ansible.cfg" into your local project directory) and comment out "host_key_checking = False"
+
 When kicking off the playbook for the first time you will be required to supply a password via the "--ask-pass" argument.
 - EG: ansible-playbook staging.yml --ask-pass
 
 You will be prompted for the password before the script continues its execution.
+
+
  
 Please note:
 - PLEASE READ: I disable BOTH WIFI AND BLUETOOTH as I have absolutely no requirement for either one of them. If you require their use, please refer to lines 31 - 38 in staging.yml and comment out as necessary to retain functionality 
