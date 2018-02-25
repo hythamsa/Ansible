@@ -99,7 +99,7 @@
         enabled: yes
 
     # Restart the Server
-    - name: REboot the server
+    - name: Reboot the server
       command: shutdown -r +1
       async: 0
       gnorepoll: 0
