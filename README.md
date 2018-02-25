@@ -52,7 +52,7 @@ This will allow ssh access into your systems using default creds:
 - password: raspberry
  
 Please note:
-- PLEASE READ: I disable BOTH WIFI AND BLUETOOTH as I have absolutely no requirement for either one of them. If you require their use, please refer to lines 31 - 38 and comment out as necessary to retain functionality 
+- PLEASE READ: I disable BOTH WIFI AND BLUETOOTH as I have absolutely no requirement for either one of them. If you require their use, please refer to lines 31 - 38 in staging.yml and comment out as necessary to retain functionality 
 - All files found in host_vars will need to be modified to reflect the hostnames you select for you environment
 - All "copy" are sourced directly from /etc/ansible/files folder on my local Ansible host. Modify as necessary
 - I currently do not have Bind configured (for now) and leverage static entries in /etc/hosts for reachability
