@@ -1,0 +1,10 @@
+[glusternodes]
+glusternode1
+glusternode2
+glusternode3
+
+[kubenodes]
+kubenode1
+kubenode2
+kubenode3
+kubenode4
