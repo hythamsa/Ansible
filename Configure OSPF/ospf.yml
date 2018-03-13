@@ -47,3 +47,9 @@
         hello_interval: 1
         provider: "{{ nxos }}"
       with_items: "{{ ospf_intf }}"
+      
+    - name: Save Running Config if Modified
+      nxos_config:
+        save_when: modified
+        timeout: 30
+        provider: "{{ nxos }}"
