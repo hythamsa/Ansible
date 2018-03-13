@@ -1,9 +1,11 @@
 ---
 
-# Define group variables
+phys_intf:
+- { interface: Ethernet1/1, mode: layer3 }
+- { interface: Ethernet1/2, mode: layer3 }
+- { interface: Loopback0, mode: layer3 }
 
-ospf_interfaces:
-- { interface: vlan2 }
-- { interface: vlan3 }
-- { interface: vlan4 }
-- { interface: vlan5 }
+ospf_intf:
+- { interface: Ethernet1/1 }
+- { interface: Ethernet1/2 }
+- { interface: Loopback0 }
