@@ -1,4 +1,4 @@
-- name: Configure BGP
+- name: Configure OSPF
   hosts: nexus
   gather_facts: no
   connection: local
