@@ -1,0 +1,20 @@
+---
+
+interface_config:
+- { interface: Loopback0, address: 172.16.255.251, mask: 255.255.255.255 }
+- { interface: FastEthernet0/0, address: 10.0.0.5, mask: 255.255.255.254 }
+- { interface: FastEthernet1/0, address: 10.0.0.7, mask: 255.255.255.254 }
+
+ospf_domain:
+- { routerid: 172.16.255.251 }
+
+ospf_speaker:
+- { address: 172.16.255.251 }
+- { address: 10.0.0.7 }
+
+ebgp_config:
+- { neighbor: 172.16.255.252, as: 2 }
+- { neighbor: 10.0.0.4, as: 1 }
+
+ibgp_config:
+- { neighbor: 172.16.255.252 }
