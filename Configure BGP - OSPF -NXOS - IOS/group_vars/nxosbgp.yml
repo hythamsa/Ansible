@@ -1,0 +1,16 @@
+---
+
+features:
+- { feature: ospf }
+- { feature: bgp }
+- { feature: nxapi }
+
+phys_intf:
+- { interface: Ethernet1/1, mode: layer3 }
+- { interface: Ethernet1/2, mode: layer3 }
+- { interface: Loopback0, mode: layer3 }
+
+ospf_intf:
+- { interface: Ethernet1/2 }
+- { interface: Ethernet1/1 }
+- { interface: Loopback0 }
