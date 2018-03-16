@@ -1,0 +1,62 @@
+---
+
+- name: Configure IOS BGP Parameters
+  hosts: iosbgp
+  gather_facts: no
+  connection: local
+
+  vars:
+    ios:
+      username: admin
+      password: admin
+      host: "{{ inventory_hostname }}"
+
+
+  tasks:
+    - name: Configure Interfaces
+      ios_config:
+        parents: "interface {{ item.interface }}"
+        lines:
+          - "ip address {{ item.address }} {{ item.mask }}"
+          - ip ospf hello-interval 1
+          - ip ospf dead-interval 4
+          - no shut
+        provider: "{{ ios }}"
+      with_items: "{{ interface_config }}"
+
+    - name: Configure OSPF Domain
+      ios_config:
+        parents: router ospf 1
+        lines:
+          - "router-id {{ item.routerid }}"
+        provider: "{{ ios }}"
+      with_items: "{{ ospf_domain }}"
+
+    - name: Configure OSPF Speaker Networks
+      ios_config:
+        parents: "router ospf 1"
+        lines:
+          - "network {{ item.address }} 0.0.0.0 area 0"
+        provider: "{{ ios }}"
+      with_items: "{{ ospf_speaker }}"
+
+    - name: Configure eBGP Neighbour Relationship(s)
+      ios_config:
+        parents: router bgp 2
+        lines:
+          - "neighbor {{ item.neighbor }} remote-as {{ item.as }}"
+        provider: "{{ ios }}"
+      with_items: "{{ ebgp_config }}"
+
+    - name: Configure iBGP Neighbour Relationship(s)
+      ios_config:
+        parents: router bgp 2
+        lines:
+          - "neighbor {{ item.neighbor }} update-source Loopback0"
+        provider: "{{ ios }}"
+      with_items: "{{ ibgp_config }}"
+
+    - name: Save Running Configuration
+      ios_config:
+        save_when: always
+        provider: "{{ ios }}"
