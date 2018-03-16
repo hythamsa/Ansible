@@ -14,7 +14,7 @@ cd $basedir
 
 if [ ! -d $tdate ]
         then
-                mkdir `date +%Y_%m_%d`
+                mkdir $tdate
 fi
 
 mv $basedir/*_config* $basedir/$tdate
