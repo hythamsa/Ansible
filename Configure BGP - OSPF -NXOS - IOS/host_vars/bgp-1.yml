@@ -1,0 +1,18 @@
+---
+
+hostnames:
+- { hostname: bgp-1 }
+
+addr_intf:
+- { interface: Ethernet1/2, addr: 10.0.0.0, mask: 31 }
+- { interface: Ethernet1/1, addr: 10.0.0.2, mask: 31 }
+- { interface: Loopback0, addr: 172.16.255.254, mask: 32 }
+
+routerid:
+- { router_id: 172.16.255.254 }
+
+ibgp_neighbors:
+- { neighbor: 172.16.255.253 }
+
+ebgp_neighbors:
+- { neighbor: 10.0.0.3 }
