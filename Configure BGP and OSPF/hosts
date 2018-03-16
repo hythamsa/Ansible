@@ -1,0 +1,7 @@
+[nxosbgp]
+bgp-1
+bgp-2
+
+[iosbgp]
+r1
+r2
