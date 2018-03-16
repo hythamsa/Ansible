@@ -1,4 +1,4 @@
 ---
 
-- import_playbook: nxosbgp.yml
-- import_playbook: iosbgp.yml
+- import_playbook: nxos.yml
+- import_playbook: ios.yml
