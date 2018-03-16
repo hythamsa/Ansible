@@ -1,0 +1,126 @@
+- name: Configure BGP and OSPF on NXOS Hosts
+  hosts: nxosbgp
+  gather_facts: no
+  connection: local
+
+  vars:
+    nxos:
+      username: admin
+      password: admin
+      transport: nxapi
+      host: "{{ inventory_hostname }}"
+
+
+  tasks:
+    - name: Enable Necessary Feature Sets
+      nxos_feature:
+        feature: "{{ item.feature }}"
+        username: admin
+        password: admin
+        transport: cli
+        host: "{{ inventory_hostname }}"
+      with_items: "{{ features }}"
+
+    # Pause before moving on to allow NXAPI Serivce Start-Up
+    - pause:
+        prompt: Allow NXAPI Start-Up to Complete Before Moving On
+        seconds: 30
+
+    - name: Configure Hostnames and Domain Name
+      nxos_system:
+        hostname: "{{ item.hostname }}"
+        domain_name: ansible.local
+        provider: "{{ nxos }}"
+      with_items: "{{ hostnames }}"
+
+    - name: Prep physical interfaces
+      nxos_interface:
+        interface: "{{ item.interface }}"
+        mode:  "{{ item.mode }}"
+        admin_state: up
+        provider: "{{ nxos }}"
+      with_items: "{{ phys_intf }}"
+
+    - name: Configure IP Addressing Per Interface
+      nxos_ip_interface:
+        interface: "{{ item.interface }}"
+        version: v4
+        addr: "{{ item.addr }}"
+        mask: "{{ item.mask }}"
+        state: present
+        provider: "{{ nxos }}"
+      with_items: "{{ addr_intf }}"
+
+    - name: Configure OSPF Domain
+      nxos_ospf:
+        ospf: 1
+        state: present
+        provider: "{{ nxos }}"
+
+    - name: Configuring OSPF Interface Parameters
+      nxos_interface_ospf:
+        interface: "{{ item.interface }}"
+        ospf: 1
+        area: 0
+        dead_interval: 4
+        hello_interval: 1
+        provider: "{{ nxos }}"
+      with_items: "{{ ospf_intf }}"
+
+    - name: Configure Base BGP Parameters
+      nxos_bgp:
+        asn: 1
+        router_id: "{{ item.router_id }}"
+        timer_bgp_hold: 9
+        timer_bgp_keepalive: 3
+        state: present
+        provider: "{{ nxos }}"
+      with_items: "{{ routerid }}"
+
+    - name: Configure iBGP Neighbour Parameters
+      nxos_bgp_neighbor:
+        neighbor: "{{ item.neighbor }}"
+        asn: 1
+        remote_as: 1
+        update_source: Loopback0
+        state: present
+        provider: "{{ nxos }}"
+      with_items: "{{ ibgp_neighbors }}"
+
+    - name: Configure iBGP AF Parameters
+      nxos_bgp_neighbor_af:
+        neighbor: "{{ item.neighbor }}"
+        safi: unicast
+        asn: 1
+        afi: ipv4
+        default_originate: true
+        soft_reconfiguration_in: enable
+        provider: "{{ nxos }}"
+      with_items: "{{ ibgp_neighbors }}"
+      tags: bgp
+
+    - name: Configure eBGP Neighbour Parameters
+      nxos_bgp_neighbor:
+        neighbor: "{{ item.neighbor }}"
+        asn: 1
+        remote_as: 2
+        state: present
+        provider: "{{ nxos }}"
+      with_items: "{{ ebgp_neighbors }}"
+
+    - name: Configure eBGP AF Parameters
+      nxos_bgp_neighbor_af:
+        neighbor: "{{ item.neighbor }}"
+        safi: unicast
+        asn: 1
+        afi: ipv4
+        default_originate: true
+        soft_reconfiguration_in: enable
+        provider: "{{ nxos }}"
+      with_items: "{{ ebgp_neighbors }}"
+
+    - name: Save Running Config if Modified
+      nxos_config:
+        save_when: modified
+        timeout: 30
+        provider: "{{ nxos }}"
